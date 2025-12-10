@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contact Me{% endblock %}
+
+{% block extra_css %}
+<style>
+    .contact-wrapper {
+        background: #fff;
+        border-radius: 15px;
+        overflow: hidden;
+    }
+    
+    .contact-info-side {
+        background: #212529; /* Matches your dark theme */
+        color: white;
+        padding: 40px;
+        position: relative;
+    }
+
+    .contact-form-side {
+        padding: 40px;
+    }
+
+    /* Customizing the form fields */
+    .form-control {
+        border-radius: 8px;
+        padding: 12px;
+        border: 1px solid #ced4da;
+        background-color: #f8f9fa;
+    }
+    .form-control:focus {
+        border-color: #212529;
+        box-shadow: 0 0 0 0.2rem rgba(33, 37, 41, 0.25);
+    }
+
+    .social-circle {
+        width: 45px;
+        height: 45px;
+        background: rgba(255,255,255,0.1);
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 10px;
+        transition: 0.3s;
+        color: white;
+        text-decoration: none;
+    }
+    .social-circle:hover {
+        background: white;
+        color: #212529;
+        transform: translateY(-3px);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            
+            <div class="shadow-lg contact-wrapper">
+                <div class="row g-0">
+                    
+                    <div class="col-md-5 contact-info-side d-flex flex-column justify-content-between">
+                        <div>
+                            <h3 class="fw-bold mb-4">Let's get in touch</h3>
+                            <p class="text-light opacity-75 mb-5">
+                                I'm open to freelance opportunities, collaboration, or just a chat about code!
+                            </p>
+
+                            <div class="d-flex align-items-start mb-4">
+                                <i class="fas fa-map-marker-alt fa-lg mt-1 me-3 text-warning"></i>
+                                <div>
+                                    <h6 class="fw-bold mb-0">Location</h6>
+                                    <small class="opacity-75">Ahmedabad, India</small>
+                                </div>
+                            </div>
+
+                            <div class="d-flex align-items-start mb-4">
+                                <i class="fas fa-envelope fa-lg mt-1 me-3 text-warning"></i>
+                                <div>
+                                    <h6 class="fw-bold mb-0">Email</h6>
+                                    <small class="opacity-75">hp5896958@gmail.com</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <p class="small opacity-75 mb-2">Connect with me:</p>
+                            <a href="https://github.com/harshil962" class="social-circle"><i class="fab fa-github"></i></a>
+                            <a href="https://www.linkedin.com/in/harshil-prajapati-3163a4283" class="social-circle"><i class="fab fa-linkedin-in"></i></a>
+                            <a href="#" class="social-circle"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-7 contact-form-side">
+                        <h3 class="fw-bold mb-4 text-dark">Send a Message</h3>
+                        
+                        <form method="post">
+                            {% csrf_token %}
+                            
+                            {% if form.errors %}
+                                <div class="alert alert-danger">
+                                    Please correct the errors below.
+                                </div>
+                            {% endif %}
+
+                            {% for field in form %}
+                            <div class="mb-3">
+                                <label for="{{ field.id_for_label }}" class="form-label fw-bold small text-uppercase">
+                                    {{ field.label }}
+                                </label>
+                                <div class="input-group">
+                                    {{ field }}
+                                </div>
+                                {% if field.help_text %}
+                                    <small class="form-text text-muted">{{ field.help_text }}</small>
+                                {% endif %}
+                                {% for error in field.errors %}
+                                    <div class="text-danger small mt-1">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                            {% endfor %}
+
+                            <div class="d-grid mt-4">
+                                <button type="submit" class="btn btn-dark btn-lg">
+                                    Send Message <i class="fas fa-paper-plane ms-2"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

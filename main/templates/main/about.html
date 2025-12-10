@@ -1,0 +1,190 @@
+{% extends 'base.html' %}
+
+{% block title %}About Me{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Section Headers */
+    .section-title {
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid #eee;
+        display: inline-block;
+        color: #212529;
+    }
+
+    /* Timeline Styling for Experience & Education */
+    .timeline {
+        position: relative;
+        padding-left: 10px;
+        margin-left: 10px;
+        border-left: 2px solid #e9ecef;
+    }
+    .timeline-item {
+        position: relative;
+        padding-left: 30px;
+        margin-bottom: 40px;
+    }
+    .timeline-item::before {
+        content: '';
+        position: absolute;
+        left: -7px; /* Adjust based on border width */
+        top: 0;
+        width: 12px;
+        height: 12px;
+        background-color: #212529;
+        border-radius: 50%;
+        border: 2px solid #fff;
+    }
+    .timeline-date {
+        font-size: 0.85rem;
+        color: #6c757d;
+        font-weight: 600;
+        text-transform: uppercase;
+        margin-bottom: 5px;
+    }
+    .timeline-title {
+        font-weight: 700;
+        font-size: 1.2rem;
+        margin-bottom: 5px;
+    }
+    .timeline-subtitle {
+        font-weight: 600;
+        color: #495057;
+        margin-bottom: 10px;
+    }
+
+    /* Skills Badges */
+    .skill-badge {
+        background-color: #f8f9fa;
+        color: #212529;
+        border: 1px solid #dee2e6;
+        padding: 8px 16px;
+        border-radius: 30px;
+        font-weight: 500;
+        display: inline-block;
+        margin: 0 5px 10px 0;
+        transition: all 0.2s;
+    }
+    .skill-badge:hover {
+        background-color: #212529;
+        color: white;
+        border-color: #212529;
+    }
+
+    /* Project List (Sidebar) */
+    .project-list-item {
+        padding: 12px;
+        border-radius: 8px;
+        background-color: #fff;
+        border: 1px solid #dee2e6;
+        margin-bottom: 10px;
+        transition: 0.2s;
+        text-decoration: none;
+        color: #212529;
+        display: block;
+    }
+    .project-list-item:hover {
+        background-color: #f8f9fa;
+        border-color: #adb5bd;
+        transform: translateX(5px);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="bg-dark text-white py-5 mb-5">
+    <div class="container">
+        <h1 class="display-4 fw-bold">About Me</h1>
+        <p class="lead">My journey, education, and technical expertise.</p>
+    </div>
+</div>
+
+<div class="container pb-5">
+    <div class="row">
+        
+        <div class="col-lg-8">
+            
+            <div class="mb-5">
+                <h2 class="section-title">Professional Experience</h2>
+                <div class="timeline">
+                    {% for job in experience %}
+                    <div class="timeline-item">
+                        <div class="timeline-date">{{ job.start_date }} - {{ job.end_date }}</div>
+                        <h4 class="timeline-title">{{ job.role }}</h4>
+                        <div class="timeline-subtitle">{{ job.company }}</div>
+                        <p class="text-muted">{{ job.description }}</p>
+                    </div>
+                    {% empty %}
+                    <p class="ps-4 text-muted">Experience details coming soon.</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="mb-5">
+                <h2 class="section-title">Education</h2>
+                <div class="timeline">
+                    {% for edu in education %}
+                    <div class="timeline-item">
+                        <div class="timeline-date">{{ edu.year }}</div>
+                        <h4 class="timeline-title">{{ edu.degree }}</h4>
+                        <div class="timeline-subtitle">{{ edu.institution }}</div>
+                        <p class="text-muted">{{ edu.description }}</p>
+                    </div>
+                    {% empty %}
+                     <div class="timeline-item">
+                        <div class="timeline-date">2020 - 2024</div>
+                        <h4 class="timeline-title">B.Tech in Computer Science</h4>
+                        <div class="timeline-subtitle">Your University Name</div>
+                        <p class="text-muted">Focused on Software Engineering and Web Technologies.</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-lg-4">
+            
+            <div class="mb-5">
+                <h2 class="section-title">Technical Skills</h2>
+                <div class="card border-0 shadow-sm p-3">
+                    <div class="card-body">
+                        <h6 class="fw-bold text-uppercase text-muted mb-3">Backend & Python</h6>
+                        <div class="mb-4">
+                            {% for skill in skills.backend %}
+                                <span class="skill-badge">{{ skill }}</span>
+                            {% empty %}
+                                <span class="skill-badge">Python</span>
+                                <span class="skill-badge">Django</span>
+                                <span class="skill-badge">SQL</span>
+                            {% endfor %}
+                        </div>
+
+                        <h6 class="fw-bold text-uppercase text-muted mb-3">Frontend</h6>
+                        <div>
+                            {% for skill in skills.frontend %}
+                                <span class="skill-badge">{{ skill }}</span>
+                            {% empty %}
+                                <span class="skill-badge">HTML5</span>
+                                <span class="skill-badge">CSS3</span>
+                                <span class="skill-badge">JavaScript</span>
+                                <span class="skill-badge">Bootstrap</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+         
+
+                <div class="mt-3 text-end">
+                    <a href="{% url 'home' %}" class="text-decoration-none fw-bold text-dark">View All Projects &rarr;</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
