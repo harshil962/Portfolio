@@ -8,9 +8,6 @@ class Project(models.Model):
     description = models.TextField()  
     tech_stack = models.CharField(max_length=200, help_text="Comma separated, e.g. Django, Bootstrap, SQLite")
     learnings = models.TextField(help_text="What did you learn from this project?", blank=True)
-    def __str__(self):
-        return self.title
-    
     def get_tech_list(self):
         if self.tech_stack:
             return [x.strip() for x in self.tech_stack.split(',')]
