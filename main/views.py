@@ -11,7 +11,7 @@ def home(request):
 def certificates(request):
     # Order by 'date_earned' descending (Newest first)
     certs = Certificate.objects.all().order_by('-date_earned')
-    return render(request, 'certificates.html', {'certs': certs})
+    return render(request, 'main/certificates.html', {'certs': certs})
 
 def contact_view(request):
     if request.method == 'POST':
