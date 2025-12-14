@@ -7,12 +7,22 @@ class Project(models.Model):
     image = models.ImageField(upload_to='portfolio/images/')
     live_link = models.URLField(blank=True, null=True, help_text="Link to deployed site")
     source_link = models.URLField(blank=True, null=True, help_text="Link to GitHub")
+    demo_video = models.FileField(
+        upload_to='portfolio/videos/', 
+        blank=True, 
+        null=True, 
+        help_text="Upload a short .mp4 video or .gif showing the project in action."
+    )
     
     def __str__(self):
         return self.title
         
     def get_tech_list(self):
         return [t.strip() for t in self.tech_stack.split(',')]
+    
+
+
+    
 
 
 class Certificate(models.Model):
