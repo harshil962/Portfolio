@@ -52,6 +52,18 @@
         color: #212529;
         transform: translateY(-3px);
     }
+    @media (max-width: 768px) {
+    .contact-wrapper .row {
+        flex-direction: column; /* Stack them vertically */
+    }
+    .contact-info-side {
+        border-radius: 15px 15px 0 0; /* Rounded top only */
+        padding: 30px;
+    }
+    .contact-form-side {
+        padding: 20px;
+    }
+}
 </style>
 {% endblock %}
 

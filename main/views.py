@@ -7,9 +7,11 @@ def home(request):
     projects = Project.objects.all()
     return render(request, 'main/home.html', {'projects': projects})
 
+
 def certificates(request):
-    certs = Certificate.objects.all()
-    return render(request, 'main/certificates.html', {'certs': certs})
+    # Order by 'date_earned' descending (Newest first)
+    certs = Certificate.objects.all().order_by('-date_earned')
+    return render(request, 'certificates.html', {'certs': certs})
 
 def contact_view(request):
     if request.method == 'POST':

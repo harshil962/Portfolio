@@ -94,6 +94,35 @@
     .btn-code:hover {
         background-color: #f8f9fa;
     }
+    /* MOBILE OPTIMIZATIONS */
+@media (max-width: 768px) {
+    /* Make Hero section smaller on phone */
+    .hero-section {
+        padding: 50px 0 40px 0;
+    }
+    
+    /* Shrink the big "Full Stack Developer" text */
+    .hero-section h1.display-4 {
+        font-size: 2.2rem; 
+    }
+    
+    /* Adjust button stack */
+    .hero-section .d-flex {
+        flex-direction: column; /* Stack buttons vertically */
+        padding: 0 40px;
+    }
+    
+    .hero-section .btn-lg {
+        width: 100%; /* Full width buttons on mobile */
+        margin-bottom: 10px;
+    }
+
+    /* Adjust Modal Video size */
+    .modal-body video, 
+    .modal-body img {
+        max-height: 250px; /* Don't be too tall on phone */
+    }
+}
 </style>
 {% endblock %}
 
