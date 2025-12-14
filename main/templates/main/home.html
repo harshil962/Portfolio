@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Portfolio | Harshil Prajapati{% endblock %}
 
 {% block extra_css %}
 <style>
@@ -13,202 +13,182 @@
         margin-bottom: 60px;
     }
 
-    .hero-section h1 {
-        letter-spacing: 1px;
-    }
-
-    .hero-section .btn-lg {
-        padding: 10px 28px;
-        border-radius: 50px;
-        font-weight: 500;
-    }
-
-    /* Project Card */
+    /* Card Styling */
     .project-card {
         transition: transform 0.3s ease, box-shadow 0.3s ease;
         border-radius: 12px;
         overflow: hidden;
         height: 100%;
-        border: none;
+        border: 1px solid rgba(0,0,0,0.1);
+        display: flex;
+        flex-direction: column;
     }
     .project-card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
     }
 
-    /* Thumbnail Wrapper */
+    /* Thumbnail */
     .card-img-wrapper {
-        height: 220px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        height: 200px;
         overflow: hidden;
-        background: #000;
+        background: #f8f9fa;
+        border-bottom: 1px solid #eee;
         position: relative;
-        cursor: pointer;
     }
-
-    /* Zoom icon */
-    .card-img-wrapper::after {
-        content: '\f00e';
-        font-family: "Font Awesome 5 Free";
-        font-weight: 900;
-        position: absolute;
-        opacity: 0;
-        font-size: 2rem;
-        color: rgba(255,255,255,0.85);
-        transition: opacity 0.3s ease;
-        pointer-events: none;
-    }
-    .card-img-wrapper:hover::after {
-        opacity: 1;
-    }
-
     .card-img-wrapper img {
-        max-width: 100%;
-        max-height: 100%;
-        object-fit: contain;
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Ensures image covers area cleanly */
         transition: 0.5s ease;
     }
     .project-card:hover .card-img-wrapper img {
         transform: scale(1.05);
-        opacity: 0.6;
+    }
+
+    /* Tech Stack Badges */
+    .badge-tech {
+        background-color: #e9ecef;
+        color: #495057;
+        font-weight: 500;
+        font-size: 0.8rem;
+        margin-right: 5px;
+        margin-bottom: 5px;
     }
 
     /* Buttons */
-    .btn-custom {
+    .btn-live {
         background-color: #212529;
         color: white;
-        padding: 8px 24px;
-        border-radius: 40px;
-        transition: 0.25s ease;
+        border-radius: 50px;
+        transition: 0.2s;
     }
-    .btn-custom:hover {
-        background-color: #343a40;
+    .btn-live:hover {
+        background-color: #000;
         color: white;
     }
-
-    /* Modal */
-    .modal-body-custom {
-        background: #000;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 200px;
+    .btn-code {
+        border: 1px solid #212529;
+        color: #212529;
+        border-radius: 50px;
+        transition: 0.2s;
     }
-
-    .modal-img-fit {
-        max-height: 85vh;
-        max-width: 100%;
-        object-fit: contain;
+    .btn-code:hover {
+        background-color: #f8f9fa;
     }
 </style>
 {% endblock %}
 
 {% block content %}
 
-<!-- HERO -->
 <header class="hero-section">
     <div class="container">
         <h1 class="display-4 fw-bold">Full Stack Developer</h1>
-        <p class="lead mb-4">Django Enthusiast • Tech Explorer • Problem Solver</p>
-
+        <p class="lead mb-4">“Building scalable web applications with Django & React. Solving real problems with code.”</p>
         <div class="d-flex justify-content-center gap-3">
-            <a href="/about/" class="btn btn-light btn-lg">About Me</a>
-            <a href="/contact/" class="btn btn-outline-light btn-lg">Get In Touch</a>
+            <a href="#projects" class="btn btn-light btn-lg rounded-pill px-4">View Work</a>
+            <a href="/contact/" class="btn btn-outline-light btn-lg rounded-pill px-4">Contact Me</a>
         </div>
     </div>
 </header>
 
-<!-- PROJECTS -->
-<div class="container pb-5">
-
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="fw-bold border-start border-4 border-dark ps-3">My Projects</h2>
+<div class="container pb-5" id="projects">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <h2 class="fw-bold border-start border-4 border-dark ps-3">Featured Projects</h2>
     </div>
 
     <div class="row g-4">
-
         {% for project in projects %}
         <div class="col-md-6 col-lg-4">
-
-            <!-- CARD -->
-            <div class="card project-card shadow-sm h-100">
-
-                <!-- Thumbnail -->
-                <div class="card-img-wrapper" 
-                     data-bs-toggle="modal" 
-                     data-bs-target="#projectModal{{ forloop.counter }}"
-                     title="Click to enlarge">
-
+            
+            <div class="card project-card shadow-sm">
+                <div class="card-img-wrapper">
                     {% if project.image %}
                         <img src="{{ project.image.url }}" alt="{{ project.title }}">
                     {% else %}
-                        <img src="https://via.placeholder.com/400x250?text=No+Image" alt="Placeholder">
+                        <img src="https://via.placeholder.com/400x250?text=Project" alt="Placeholder">
                     {% endif %}
                 </div>
 
-                <!-- Body -->
                 <div class="card-body d-flex flex-column">
-                    <h5 class="card-title fw-bold">{{ project.title }}</h5>
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="card-title fw-bold mb-0">{{ project.title }}</h5>
+                    </div>
 
-                    <p class="card-text text-muted flex-grow-1 text-break">
+                    <div class="mb-3">
+                        {% for tech in project.get_tech_list %}
+                            <span class="badge badge-tech">{{ tech }}</span>
+                        {% endfor %}
+                    </div>
+
+                    <p class="card-text text-muted small flex-grow-1">
                         {{ project.description|truncatewords:20 }}
                     </p>
 
-                    <div class="mt-3">
-                        {% if project.link %}
-                            <a href="{{ project.link }}" target="_blank" class="btn btn-custom w-100">
-                                View Project <i class="fas fa-external-link-alt ms-1"></i>
+                    <div class="d-flex gap-2 mt-3">
+                        <button class="btn btn-code w-100 btn-sm" data-bs-toggle="modal" data-bs-target="#projectModal{{ forloop.counter }}">
+                            <i class="fas fa-info-circle me-1"></i> Case Study
+                        </button>
+                        
+                        {% if project.live_link %}
+                            <a href="{{ project.live_link }}" target="_blank" class="btn btn-live w-100 btn-sm">
+                                Live Demo <i class="fas fa-external-link-alt ms-1"></i>
                             </a>
-                        {% else %}
-                            <button class="btn btn-secondary w-100" disabled>Coming Soon</button>
                         {% endif %}
                     </div>
-
                 </div>
             </div>
 
-            <!-- MODAL -->
             <div class="modal fade" id="projectModal{{ forloop.counter }}" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-xl">
-                    <div class="modal-content bg-dark text-white">
+                <div class="modal-dialog modal-dialog-centered modal-lg"> <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title fw-bold">{{ project.title }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        
+                        <div class="modal-body p-4">
+                            <div class="mb-4 rounded overflow-hidden shadow-sm">
+                                {% if project.image %}
+                                    <img src="{{ project.image.url }}" class="img-fluid w-100" style="max-height: 400px; object-fit: cover;">
+                                {% endif %}
+                            </div>
 
-                        <div class="modal-header border-secondary">
-                            <h5 class="modal-title">{{ project.title }}</h5>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                            <h6 class="fw-bold text-uppercase text-muted small">Technologies Used</h6>
+                            <div class="mb-4">
+                                {% for tech in project.get_tech_list %}
+                                    <span class="badge bg-dark me-1">{{ tech }}</span>
+                                {% endfor %}
+                            </div>
+
+                            <h6 class="fw-bold text-uppercase text-muted small">About the Project</h6>
+                            <div class="text-secondary" style="line-height: 1.7;">
+                                {{ project.description|linebreaks }}
+                            </div>
                         </div>
 
-                        <div class="modal-body modal-body-custom">
-                            {% if project.image %}
-                                <img src="{{ project.image.url }}" class="modal-img-fit">
-                            {% else %}
-                                <img src="https://via.placeholder.com/800x500?text=No+Image" class="modal-img-fit">
+                        <div class="modal-footer bg-light">
+                            {% if project.source_link %}
+                                <a href="{{ project.source_link }}" target="_blank" class="btn btn-outline-dark">
+                                    <i class="fab fa-github me-2"></i>View Source Code
+                                </a>
                             {% endif %}
-                        </div>
-
-                        <div class="modal-footer border-secondary">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-
-                            {% if project.link %}
-                                <a href="{{ project.link }}" target="_blank" class="btn btn-custom">
-                                    View Source Code
+                            
+                            {% if project.live_link %}
+                                <a href="{{ project.live_link }}" target="_blank" class="btn btn-dark">
+                                    Visit Website <i class="fas fa-arrow-right ms-2"></i>
                                 </a>
                             {% endif %}
                         </div>
-
                     </div>
                 </div>
             </div>
 
         </div>
         {% empty %}
-            <div class="col-12 text-center py-5">
-                <p class="text-muted">No projects added yet.</p>
-            </div>
+        <div class="col-12 text-center py-5">
+            <p class="text-muted">Projects are being updated. Check back soon!</p>
+        </div>
         {% endfor %}
-
     </div>
 </div>
-
 {% endblock %}

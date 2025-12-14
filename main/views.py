@@ -58,3 +58,32 @@ def about(request):
         ]
     }
     return render(request, 'main/about.html', context)
+
+
+
+# views.py
+
+from .models import Project, Certificate, Skill, Timeline, Testimonial
+
+# ... (keep your home, certificates, contact views same) ...
+
+def about(request):
+    # Fetch data from DB
+    skills_backend = Skill.objects.filter(category='backend')
+    skills_frontend = Skill.objects.filter(category='frontend')
+    skills_tools = Skill.objects.filter(category='tools')
+    
+    experience = Timeline.objects.filter(category='experience')
+    education = Timeline.objects.filter(category='education')
+    
+    testimonials = Testimonial.objects.all()
+
+    context = {
+        'skills_backend': skills_backend,
+        'skills_frontend': skills_frontend,
+        'skills_tools': skills_tools,
+        'experience': experience,
+        'education': education,
+        'testimonials': testimonials,
+    }
+    return render(request, 'main/about.html', context)

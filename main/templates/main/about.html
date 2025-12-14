@@ -7,184 +7,191 @@
     /* Section Headers */
     .section-title {
         font-weight: 700;
-        margin-bottom: 1.5rem;
-        padding-bottom: 0.5rem;
-        border-bottom: 2px solid #eee;
+        margin-bottom: 30px;
+        position: relative;
         display: inline-block;
-        color: #212529;
+    }
+    .section-title::after {
+        content: '';
+        display: block;
+        width: 50%;
+        height: 3px;
+        background: #00c4ff; /* Your accent color */
+        margin-top: 5px;
     }
 
-    /* Timeline Styling for Experience & Education */
-    .timeline {
-        position: relative;
-        padding-left: 10px;
-        margin-left: 10px;
-        border-left: 2px solid #e9ecef;
-    }
+    /* Timeline Styling */
     .timeline-item {
-        position: relative;
         padding-left: 30px;
-        margin-bottom: 40px;
+        border-left: 2px solid #ddd;
+        position: relative;
+        padding-bottom: 30px;
     }
     .timeline-item::before {
         content: '';
-        position: absolute;
-        left: -7px; /* Adjust based on border width */
-        top: 0;
         width: 12px;
         height: 12px;
-        background-color: #212529;
+        background: #00c4ff;
         border-radius: 50%;
-        border: 2px solid #fff;
+        position: absolute;
+        left: -7px;
+        top: 5px;
     }
     .timeline-date {
-        font-size: 0.85rem;
+        font-size: 0.9rem;
         color: #6c757d;
-        font-weight: 600;
-        text-transform: uppercase;
-        margin-bottom: 5px;
-    }
-    .timeline-title {
-        font-weight: 700;
-        font-size: 1.2rem;
-        margin-bottom: 5px;
-    }
-    .timeline-subtitle {
-        font-weight: 600;
-        color: #495057;
-        margin-bottom: 10px;
+        font-weight: 500;
     }
 
     /* Skills Badges */
     .skill-badge {
-        background-color: #f8f9fa;
-        color: #212529;
-        border: 1px solid #dee2e6;
-        padding: 8px 16px;
+        font-size: 0.95rem;
+        padding: 8px 15px;
         border-radius: 30px;
-        font-weight: 500;
+        margin: 5px;
         display: inline-block;
-        margin: 0 5px 10px 0;
-        transition: all 0.2s;
+        transition: 0.3s;
+        border: 1px solid #dee2e6;
+        background: white;
     }
     .skill-badge:hover {
-        background-color: #212529;
-        color: white;
+        background: #212529;
+        color: #00c4ff;
         border-color: #212529;
+        transform: translateY(-2px);
     }
 
-    /* Project List (Sidebar) */
-    .project-list-item {
-        padding: 12px;
-        border-radius: 8px;
-        background-color: #fff;
-        border: 1px solid #dee2e6;
-        margin-bottom: 10px;
-        transition: 0.2s;
-        text-decoration: none;
-        color: #212529;
-        display: block;
+    /* Testimonial Card */
+    .testimonial-card {
+        background: white;
+        border: none;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        border-radius: 15px;
+        padding: 25px;
     }
-    .project-list-item:hover {
-        background-color: #f8f9fa;
-        border-color: #adb5bd;
-        transform: translateX(5px);
+    .quote-icon {
+        font-size: 2rem;
+        color: #00c4ff;
+        opacity: 0.3;
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="bg-dark text-white py-5 mb-5">
-    <div class="container">
-        <h1 class="display-4 fw-bold">About Me</h1>
-        <p class="lead">My journey, education, and technical expertise.</p>
-    </div>
-</div>
 
-<div class="container pb-5">
-    <div class="row">
+<div class="container py-5">
+    
+    <div class="row align-items-center mb-5">
+        <div class="col-lg-6">
+            <h1 class="display-5 fw-bold mb-3">Hello, I'm Harshil.</h1>
+            <p class="lead text-muted">Full Stack Developer & Django Enthusiast</p>
+            <p style="line-height: 1.8;">
+                I am a 3rd-year Computer Engineering student passionate about building scalable web applications. 
+                My journey started with Python, and I quickly fell in love with the <strong>Django ecosystem</strong>.
+            </p>
+            <p style="line-height: 1.8;">
+                I don't just write code; I solve problems. From building secure <strong>E-commerce platforms</strong> 
+                to designing complex system architectures (DFDs/ERDs), I enjoy the entire development lifecycle.
+                I am currently looking for internship opportunities where I can contribute and grow.
+            </p>
+            <a href="/contact/" class="btn btn-dark rounded-pill px-4 mt-3">Let's Work Together</a>
+        </div>
+        <div class="col-lg-6 mt-4 mt-lg-0 text-center">
+            <img src="Harshil./500x400?text=Harshil+Working" class="img-fluid rounded-4 shadow-sm" alt="Harshil Profile">
+        </div>
+    </div>
+
+    <hr class="my-5 text-muted">
+
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h2 class="section-title">Technical Skills</h2>
+        </div>
         
-        <div class="col-lg-8">
-            
-            <div class="mb-5">
-                <h2 class="section-title">Professional Experience</h2>
-                <div class="timeline">
-                    {% for job in experience %}
-                    <div class="timeline-item">
-                        <div class="timeline-date">{{ job.start_date }} - {{ job.end_date }}</div>
-                        <h4 class="timeline-title">{{ job.role }}</h4>
-                        <div class="timeline-subtitle">{{ job.company }}</div>
-                        <p class="text-muted">{{ job.description }}</p>
-                    </div>
-                    {% empty %}
-                    <p class="ps-4 text-muted">Experience details coming soon.</p>
-                    {% endfor %}
-                </div>
+        <div class="col-md-4 mb-4">
+            <h5 class="fw-bold text-center mb-3"><i class="fas fa-server text-secondary me-2"></i>Backend</h5>
+            <div class="text-center">
+                {% for skill in skills_backend %}
+                    <span class="skill-badge">{{ skill.name }}</span>
+                {% endfor %}
             </div>
-
-            <div class="mb-5">
-                <h2 class="section-title">Education</h2>
-                <div class="timeline">
-                    {% for edu in education %}
-                    <div class="timeline-item">
-                        <div class="timeline-date">{{ edu.year }}</div>
-                        <h4 class="timeline-title">{{ edu.degree }}</h4>
-                        <div class="timeline-subtitle">{{ edu.institution }}</div>
-                        <p class="text-muted">{{ edu.description }}</p>
-                    </div>
-                    {% empty %}
-                     <div class="timeline-item">
-                        <div class="timeline-date">2020 - 2024</div>
-                        <h4 class="timeline-title">B.Tech in Computer Science</h4>
-                        <div class="timeline-subtitle">Your University Name</div>
-                        <p class="text-muted">Focused on Software Engineering and Web Technologies.</p>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-
         </div>
 
-        <div class="col-lg-4">
-            
-            <div class="mb-5">
-                <h2 class="section-title">Technical Skills</h2>
-                <div class="card border-0 shadow-sm p-3">
-                    <div class="card-body">
-                        <h6 class="fw-bold text-uppercase text-muted mb-3">Backend & Python</h6>
-                        <div class="mb-4">
-                            {% for skill in skills.backend %}
-                                <span class="skill-badge">{{ skill }}</span>
-                            {% empty %}
-                                <span class="skill-badge">Python</span>
-                                <span class="skill-badge">Django</span>
-                                <span class="skill-badge">SQL</span>
-                            {% endfor %}
-                        </div>
-
-                        <h6 class="fw-bold text-uppercase text-muted mb-3">Frontend</h6>
-                        <div>
-                            {% for skill in skills.frontend %}
-                                <span class="skill-badge">{{ skill }}</span>
-                            {% empty %}
-                                <span class="skill-badge">HTML5</span>
-                                <span class="skill-badge">CSS3</span>
-                                <span class="skill-badge">JavaScript</span>
-                                <span class="skill-badge">Bootstrap</span>
-                            {% endfor %}
-                        </div>
-                    </div>
-                </div>
+        <div class="col-md-4 mb-4">
+            <h5 class="fw-bold text-center mb-3"><i class="fas fa-laptop-code text-secondary me-2"></i>Frontend</h5>
+            <div class="text-center">
+                {% for skill in skills_frontend %}
+                    <span class="skill-badge">{{ skill.name }}</span>
+                {% endfor %}
             </div>
+        </div>
 
-         
-
-                <div class="mt-3 text-end">
-                    <a href="{% url 'home' %}" class="text-decoration-none fw-bold text-dark">View All Projects &rarr;</a>
-                </div>
+        <div class="col-md-4 mb-4">
+            <h5 class="fw-bold text-center mb-3"><i class="fas fa-tools text-secondary me-2"></i>Tools</h5>
+            <div class="text-center">
+                {% for skill in skills_tools %}
+                    <span class="skill-badge">{{ skill.name }}</span>
+                {% endfor %}
             </div>
-
         </div>
     </div>
+
+    <div class="row mb-5">
+        <div class="col-md-6">
+            <h3 class="fw-bold mb-4"><i class="fas fa-briefcase me-2 text-info"></i>Experience</h3>
+            {% for item in experience %}
+            <div class="timeline-item">
+                <span class="timeline-date">{{ item.start_date }} - {{ item.end_date }}</span>
+                <h5 class="fw-bold mt-1">{{ item.title }}</h5>
+                <p class="text-muted mb-1">{{ item.organization }}</p>
+                <small>{{ item.description }}</small>
+            </div>
+            {% empty %}
+            <p class="text-muted">Open to new opportunities!</p>
+            {% endfor %}
+        </div>
+
+        <div class="col-md-6 mt-4 mt-md-0">
+            <h3 class="fw-bold mb-4"><i class="fas fa-graduation-cap me-2 text-info"></i>Education</h3>
+            {% for item in education %}
+            <div class="timeline-item">
+                <span class="timeline-date">{{ item.start_date }} - {{ item.end_date }}</span>
+                <h5 class="fw-bold mt-1">{{ item.title }}</h5>
+                <p class="text-muted mb-1">{{ item.organization }}</p>
+                <small>{{ item.description }}</small>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    {% if testimonials %}
+    <div class="bg-light p-4 rounded-4 my-5">
+        <h2 class="section-title text-center w-100">Testimonials</h2>
+        <div class="row g-4 mt-2">
+            {% for test in testimonials %}
+            <div class="col-md-6 col-lg-4">
+                <div class="testimonial-card h-100">
+                    <i class="fas fa-quote-left quote-icon"></i>
+                    <p class="mt-3 fst-italic">"{{ test.quote }}"</p>
+                    <div class="d-flex align-items-center mt-4">
+                        {% if test.image %}
+                            <img src="{{ test.image.url }}" class="rounded-circle me-3" width="50" height="50">
+                        {% else %}
+                            <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center me-3" style="width:50px; height:50px">
+                                {{ test.name|slice:":1" }}
+                            </div>
+                        {% endif %}
+                        <div>
+                            <h6 class="fw-bold mb-0">{{ test.name }}</h6>
+                            <small class="text-muted">{{ test.role }}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
 </div>
 {% endblock %}
