@@ -19,14 +19,6 @@ class Project(models.Model):
         
     def get_tech_list(self):
         return [t.strip() for t in self.tech_stack.split(',')]
-    
-
-
-    
-
-
-    # ... remaining fields ...
-
 
 class Certificate(models.Model):
     name = models.CharField(max_length=200)
