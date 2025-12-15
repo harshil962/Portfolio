@@ -94,6 +94,13 @@
     .btn-code:hover {
         background-color: #f8f9fa;
     }
+
+
+    /* Custom Cursor Style */
+.typed-cursor {
+    color: #0d6efd; /* Matches the text color */
+    font-size: 2.5rem;
+}
     /* MOBILE OPTIMIZATIONS */
 @media (max-width: 768px) {
     /* Make Hero section smaller on phone */
@@ -130,7 +137,7 @@
 
 <header class="hero-section">
     <div class="container">
-        <h1 class="display-4 fw-bold">Full Stack Developer</h1>
+        <h1 class="display-4 fw-bold">I'm a <span class="auto-type" style="color: #0d6efd;"></span></h1>
         <p class="lead mb-4">“Building scalable web applications with Django & React. Solving real problems with code.”</p>
         <div class="d-flex justify-content-center gap-3">
             <a href="#projects" class="btn btn-light btn-lg rounded-pill px-4">View Work</a>
@@ -254,4 +261,21 @@
         {% endfor %}
     </div>
 </div>
+{% endblock %}
+{% block extra_js %}
+<script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+
+<script>
+    var typed = new Typed(".auto-type", {
+        strings: [
+            "Full Stack Developer", 
+            "Django Enthusiast", 
+            "Tech Explorer", 
+            "Problem Solver"
+        ],
+        typeSpeed: 100,  // Speed of typing (ms)
+        backSpeed: 50,   // Speed of deleting (ms)
+        loop: true       // Loop the animation infinitely
+    });
+</script>
 {% endblock %}
