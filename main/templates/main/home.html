@@ -204,8 +204,11 @@
                         <div class="modal-body p-4">
                             <div class="mb-4 rounded overflow-hidden shadow-sm border">
                                 {% if project.demo_video %}
-                                    <video class="w-100" style="max-height: 400px; object-fit: contain; background: #000;" controls autoplay muted loop playsinline>
-                                        <source src="{{ project.demo_video.url }}" type="video/mp4">
+                                    <video 
+                                        class="w-100" 
+                                        style="max-height: 400px; object-fit: contain; background: #000;" 
+                                        controls 
+                                        preload="none"  poster="{{ project.image.url }}"> <source src="{{ project.demo_video.url }}" type="video/mp4">
                                         Your browser does not support the video tag.
                                     </video>
                                 {% elif project.image %}

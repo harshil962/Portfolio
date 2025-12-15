@@ -1,4 +1,5 @@
 from django.db import models
+from cloudinary.models import CloudinaryField
 
 class Project(models.Model):
     title = models.CharField(max_length=100)
@@ -7,11 +8,10 @@ class Project(models.Model):
     image = models.ImageField(upload_to='portfolio/images/')
     live_link = models.URLField(blank=True, null=True, help_text="Link to deployed site")
     source_link = models.URLField(blank=True, null=True, help_text="Link to GitHub")
-    demo_video = models.FileField(
-        upload_to='portfolio/videos/', 
-        blank=True, 
-        null=True, 
-        help_text="Upload a short .mp4 video or .gif showing the project in action."
+    demo_video = CloudinaryField(
+    resource_type='video',
+    blank=True,
+    null=True
     )
 
     def __str__(self):

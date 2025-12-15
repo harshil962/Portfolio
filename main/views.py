@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Project, Certificate
 from .forms import ContactForm
 from django.contrib import messages 
+from .models import Project, Certificate, Skill, Timeline, Testimonial
 
 def home(request):
     projects = Project.objects.all()
@@ -24,50 +25,6 @@ def contact_view(request):
         form = ContactForm()
 
     return render(request, 'main/contact.html', {'form': form})
-
-def about(request):
-    # If you have models, fetch from DB:
-    # experience = Experience.objects.all().order_by('-start_date')
-    # education = Education.objects.all().order_by('-year')
-    # projects = Project.objects.all()
-
-    # OR, if you want to hardcode it for now in the view:
-    context = {
-        'experience': [
-            {
-                'role': 'Full Stack Developer Intern',
-                'company': 'Tech Solution Inc.',
-                'start_date': 'Jan 2025',
-                'end_date': 'Present',
-                'description': 'Developing web apps using Django and React.'
-            }
-        ],
-        'education': [
-            {
-                'degree': 'B.Tech Computer Engineering',
-                'institution': 'Gujarat Technological University',
-                'year': '2021 - 2025',
-                'description': 'CGPA: 8.5'
-            }
-        ],
-        'skills': {
-            'backend': ['Python', 'Django', 'REST APIs', 'PostgreSQL'],
-            'frontend': ['JavaScript', 'HTML5', 'CSS3', 'Bootstrap 5']
-        },
-        'projects': [
-            {'title': 'Online Medical Store', 'link': '/projects/medical-store'},
-            {'title': 'Portfolio Website', 'link': '/projects/portfolio'},
-        ]
-    }
-    return render(request, 'main/about.html', context)
-
-
-
-# views.py
-
-from .models import Project, Certificate, Skill, Timeline, Testimonial
-
-# ... (keep your home, certificates, contact views same) ...
 
 def about(request):
     # Fetch data from DB
