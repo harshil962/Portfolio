@@ -17,14 +17,17 @@
         background: #0f172a; /* Fallback */
         background: radial-gradient(circle at top right, #1e293b, #0f172a);
         color: white;
-        padding: 120px 0 100px;
+        padding: 200px 0 100px; 
         text-align: center;
         margin-bottom: 80px;
         position: relative;
         overflow: hidden;
+        min-height: 85vh; 
+        display: flex;
+        align-items: center;
     }
 
-    /* Abstract background shape for visual interest */
+    /* Abstract background shape */
     .hero-section::before {
         content: '';
         position: absolute;
@@ -196,15 +199,7 @@
         font-weight: 500;
         transition: all 0.2s;
     }
-    .btn-live-demo {
-        background: var(--primary-gradient);
-        color: white !important;
-        border: none;
-    }
-    .btn-live-demo:hover {
-        opacity: 0.95;
-        transform: translateY(-1px);
-    }
+    
     .btn-details {
         background: transparent;
         border: 1px solid #cbd5e1;
@@ -225,7 +220,7 @@
 
     /* Responsive */
     @media (max-width: 768px) {
-        .hero-section { padding: 80px 0 60px; }
+        .hero-section { padding: 150px 0 60px; min-height: auto; }
         .hero-title { font-size: 2.5rem; }
         .btn-gradient, .btn-outline-custom { width: 100%; margin-bottom: 10px; }
     }
@@ -235,7 +230,7 @@
 {% block content %}
 
 <header class="hero-section">
-    <div class="container position-relative" style="z-index: 2;">
+    <div class="container position-relative" style="z-index: 2; width: 100%;">
         <h1 class="display-3 hero-title">I'm a <span class="auto-type highlight-text"></span></h1>
         <p class="lead mb-5 text-white-50 mx-auto" style="max-width: 600px;">
             Building scalable web applications with Django & React. Solving real-world problems with elegant code.
@@ -296,9 +291,9 @@
                             <i class="fas fa-info-circle me-1"></i> Details
                         </button>
                         
-                        {% if project.live_link %}
-                            <a href="{{ project.live_link }}" target="_blank" class="btn btn-live-demo btn-card-action flex-grow-1 text-center">
-                                Live <i class="fas fa-external-link-alt ms-1"></i>
+                        {% if project.source_link %}
+                            <a href="{{ project.source_link }}" target="_blank" class="btn btn-dark btn-card-action flex-grow-1 text-center">
+                                <i class="fab fa-github me-1"></i> Source
                             </a>
                         {% endif %}
                     </div>
@@ -340,16 +335,10 @@
                             </div>
                         </div>
 
-                        <div class="modal-footer border-top-0 pt-0 pb-4 px-4">
+                        <div class="modal-footer border-top-0 pt-0 pb-4 px-4 justify-content-center">
                             {% if project.source_link %}
-                                <a href="{{ project.source_link }}" target="_blank" class="btn btn-outline-dark rounded-pill px-4">
+                                <a href="{{ project.source_link }}" target="_blank" class="btn btn-gradient rounded-pill px-4">
                                     <i class="fab fa-github me-2"></i>Source Code
-                                </a>
-                            {% endif %}
-                            
-                            {% if project.live_link %}
-                                <a href="{{ project.live_link }}" target="_blank" class="btn btn-gradient rounded-pill px-4">
-                                    Visit Site <i class="fas fa-arrow-right ms-2"></i>
                                 </a>
                             {% endif %}
                         </div>

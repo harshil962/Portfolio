@@ -14,10 +14,11 @@ class Project(models.Model):
     )
 
     demo_video = CloudinaryField(
-        resource_type='video',
-        blank=True,
-        null=True
-    )
+    resource_type='video',
+    blank=True,
+    null=True
+)
+
 
     live_link = models.URLField(blank=True, null=True)
     source_link = models.URLField(blank=True, null=True)
@@ -47,16 +48,14 @@ class Contact(models.Model):
     def __str__(self):
         return self.email
     
-
-    # portfolio/models.py (Add these to your existing file)
-
 class Skill(models.Model):
     CATEGORY_CHOICES = (
         ('backend', 'Backend'),
         ('frontend', 'Frontend'),
+        ('database', 'Databases'),  
         ('tools', 'Tools & DevOps'),
     )
-    name = models.CharField(max_length=50) # e.g., "Django"
+    name = models.CharField(max_length=50)
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
     
     def __str__(self):

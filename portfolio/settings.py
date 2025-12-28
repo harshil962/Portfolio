@@ -138,6 +138,8 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+os.environ['CLOUDINARY_URL'] = 'cloudinary://API_KEY:API_SECRET@CLOUD_NAME'
+
 
 cloudinary.config(
     cloud_name="djrichsnt",

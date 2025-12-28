@@ -3,6 +3,7 @@ from .models import Project, Certificate
 from .forms import ContactForm
 from django.contrib import messages 
 from .models import Project, Certificate, Skill, Timeline, Testimonial
+from django.shortcuts import render
 
 def home(request):
     projects = Project.objects.all()
@@ -26,23 +27,32 @@ def contact_view(request):
 
     return render(request, 'main/contact.html', {'form': form})
 
+
+# In views.py
+
 def about(request):
-    # Fetch data from DB
+    # 1. Fetch Skills by Category
     skills_backend = Skill.objects.filter(category='backend')
     skills_frontend = Skill.objects.filter(category='frontend')
+    skills_database = Skill.objects.filter(category='database') # <--- The new line we added
     skills_tools = Skill.objects.filter(category='tools')
-    
+
+    # 2. Fetch Timeline (Experience vs Education)
+    # These lines were missing, causing the NameError
     experience = Timeline.objects.filter(category='experience')
     education = Timeline.objects.filter(category='education')
-    
+
+    # 3. Fetch Testimonials
     testimonials = Testimonial.objects.all()
 
     context = {
         'skills_backend': skills_backend,
         'skills_frontend': skills_frontend,
+        'skills_database': skills_database,
         'skills_tools': skills_tools,
         'experience': experience,
         'education': education,
         'testimonials': testimonials,
     }
+    
     return render(request, 'main/about.html', context)
