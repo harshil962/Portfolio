@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 
 from pathlib import Path
 import os
+import cloudinary
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -42,11 +43,6 @@ INSTALLED_APPS = [
     'main',
 ]
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'djrichsnt', # Get these from https://cloudinary.com/
-    'API_KEY': '764775665449698',
-    'API_SECRET': '9mMCqw1jiJt57kl3BdYSUnvSz94',
-}
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
@@ -140,3 +136,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+cloudinary.config(
+    cloud_name="djrichsnt",
+    api_key="764775665449698",
+    api_secret="9mMCqw1jiJt57kl3BdYSUnvSz94",
+    secure=True
+)

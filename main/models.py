@@ -1,24 +1,33 @@
 from django.db import models
 from cloudinary.models import CloudinaryField
 
+
 class Project(models.Model):
     title = models.CharField(max_length=100)
     tech_stack = models.CharField(max_length=200, help_text="Comma separated technologies")
-    description = models.TextField() 
-    image = models.ImageField(upload_to='portfolio/images/')
-    live_link = models.URLField(blank=True, null=True, help_text="Link to deployed site")
-    source_link = models.URLField(blank=True, null=True, help_text="Link to GitHub")
-    demo_video = CloudinaryField(
-    resource_type='video',
-    blank=True,
-    null=True
+    description = models.TextField()
+
+    image = CloudinaryField(
+        'image',
+        blank=True,
+        null=True
     )
+
+    demo_video = CloudinaryField(
+        resource_type='video',
+        blank=True,
+        null=True
+    )
+
+    live_link = models.URLField(blank=True, null=True)
+    source_link = models.URLField(blank=True, null=True)
 
     def __str__(self):
         return self.title
-        
+
     def get_tech_list(self):
         return [t.strip() for t in self.tech_stack.split(',')]
+
 
 class Certificate(models.Model):
     name = models.CharField(max_length=200)

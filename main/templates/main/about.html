@@ -1,214 +1,356 @@
 {% extends 'base.html' %}
-{% load static %} {% block title %}About Me{% endblock %}
+{% load static %}
+
+{% block title %}About Me | Harshil Prajapati{% endblock %}
 
 {% block extra_css %}
 <style>
-    /* Section Headers */
-    .section-title {
-        font-weight: 700;
-        margin-bottom: 30px;
+    :root {
+        --primary-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    /* --- HERO SECTION --- */
+    .about-hero {
+        background: #0f172a;
+        background: radial-gradient(circle at bottom left, #1e293b, #0f172a);
+        color: white;
+        padding: 100px 0 80px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Abstract background shapes */
+    .about-hero::before {
+        content: '';
+        position: absolute;
+        top: -20%;
+        right: -10%;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, rgba(0,0,0,0) 70%);
+        pointer-events: none;
+    }
+
+    /* Profile Image with Gradient Glow */
+    .profile-img-container {
         position: relative;
         display: inline-block;
+        padding: 5px;
+        background: var(--primary-gradient);
+        border-radius: 50%;
+        box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+    }
+    .profile-img {
+        border-radius: 50%;
+        border: 4px solid #0f172a; /* Matches bg color to create spacing */
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+    .profile-img-container:hover .profile-img {
+        transform: scale(1.02);
+    }
+
+    /* --- SECTION STYLING --- */
+    .section-title {
+        font-weight: 800;
+        margin-bottom: 2.5rem;
+        position: relative;
+        display: inline-block;
+        color: var(--text-color);
     }
     .section-title::after {
         content: '';
-        display: block;
-        width: 50%;
-        height: 3px;
-        background: #00c4ff;
-        margin-top: 5px;
-    }
-
-    /* Timeline Styling */
-    .timeline-item {
-        padding-left: 30px;
-        border-left: 2px solid #ddd;
-        position: relative;
-        padding-bottom: 30px;
-    }
-    .timeline-item::before {
-        content: '';
-        width: 12px;
-        height: 12px;
-        background: #00c4ff;
-        border-radius: 50%;
         position: absolute;
-        left: -7px;
-        top: 5px;
-    }
-    .timeline-date {
-        font-size: 0.9rem;
-        color: #6c757d;
-        font-weight: 500;
+        bottom: -10px;
+        left: 0;
+        width: 40%;
+        height: 4px;
+        background: var(--primary-gradient);
+        border-radius: 2px;
     }
 
-    /* Skills Badges */
-    .skill-badge {
-        font-size: 0.95rem;
-        padding: 8px 15px;
-        border-radius: 30px;
-        margin: 5px;
-        display: inline-block;
-        transition: 0.3s;
-        border: 1px solid #dee2e6;
-        background: white;
+    /* --- SKILLS BADGES (Matches Home) --- */
+    .skill-card {
+        background: var(--card-bg, #fff);
+        border-radius: 16px;
+        padding: 25px;
+        height: 100%;
+        box-shadow: var(--card-shadow);
+        border: 1px solid rgba(0,0,0,0.05);
+        transition: transform 0.3s ease;
     }
-    .skill-badge:hover {
-        background: #212529;
-        color: #00c4ff;
-        border-color: #212529;
+    [data-bs-theme="dark"] .skill-card {
+        background: #1e293b;
+        border-color: rgba(255,255,255,0.05);
+    }
+    .skill-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .badge-skill {
+        background: rgba(99, 102, 241, 0.1);
+        color: #6366f1;
+        font-weight: 600;
+        padding: 8px 16px;
+        border-radius: 50px;
+        font-size: 0.9rem;
+        margin: 4px;
+        display: inline-block;
+        transition: all 0.2s;
+        border: 1px solid transparent;
+    }
+    [data-bs-theme="dark"] .badge-skill {
+        background: rgba(99, 102, 241, 0.2);
+        color: #a5b4fc;
+    }
+    .badge-skill:hover {
+        background: var(--primary-gradient);
+        color: white;
         transform: translateY(-2px);
     }
 
-    /* Testimonial Card */
-    .testimonial-card {
-        background: white;
-        border: none;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        border-radius: 15px;
-        padding: 25px;
+    /* --- TIMELINE (Modernized) --- */
+    .timeline-container {
+        position: relative;
     }
-    .quote-icon {
-        font-size: 2rem;
-        color: #00c4ff;
-        opacity: 0.3;
+    .timeline-item {
+        padding-left: 40px;
+        border-left: 2px solid rgba(99, 102, 241, 0.2);
+        position: relative;
+        padding-bottom: 40px;
+    }
+    .timeline-item:last-child {
+        border-left: 2px solid transparent;
+    }
+    
+    /* The Dot */
+    .timeline-item::before {
+        content: '';
+        width: 16px;
+        height: 16px;
+        background: var(--primary-gradient);
+        border-radius: 50%;
+        position: absolute;
+        left: -9px;
+        top: 5px;
+        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
     }
 
-    /* --- MOBILE OPTIMIZATION --- */
+    .timeline-date {
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #6366f1;
+        margin-bottom: 5px;
+        display: block;
+    }
+    [data-bs-theme="dark"] .timeline-date {
+        color: #a5b4fc;
+    }
+
+    .timeline-card {
+        background: var(--card-bg, #f8f9fa);
+        border-radius: 12px;
+        padding: 20px;
+        border: 1px solid rgba(0,0,0,0.03);
+    }
+    [data-bs-theme="dark"] .timeline-card {
+        background: rgba(255,255,255,0.03);
+        border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    /* --- TESTIMONIALS --- */
+    .testimonial-card {
+        background: var(--card-bg, #fff);
+        border: none;
+        box-shadow: var(--card-shadow);
+        border-radius: 16px;
+        padding: 30px;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+    [data-bs-theme="dark"] .testimonial-card {
+        background: #1e293b;
+    }
+    .quote-icon {
+        color: #e2e8f0;
+        font-size: 4rem;
+        position: absolute;
+        top: 10px;
+        right: 20px;
+        opacity: 0.5;
+        z-index: 0;
+    }
+    [data-bs-theme="dark"] .quote-icon {
+        color: #334155;
+    }
+    .testimonial-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    /* Mobile adjustments */
     @media (max-width: 768px) {
-        .display-5 {
-            font-size: 2rem; /* Smaller heading on phone */
-        }
-        .lead {
-            font-size: 1rem;
-        }
-        .timeline-item {
-            padding-left: 20px; /* Less padding on small screens */
-        }
-        .section-title {
-            margin-bottom: 20px;
-        }
+        .about-hero { padding: 60px 0; text-align: center; }
+        .profile-img { width: 150px; height: 150px; }
+        .section-title::after { left: 50%; transform: translateX(-50%); }
+        .timeline-item { padding-left: 25px; }
     }
 </style>
 {% endblock %}
 
 {% block content %}
 
+<header class="about-hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-5 text-center mb-4 mb-lg-0">
+                <div class="profile-img-container">
+                    <img src="{% static 'images/harshil.jpg' %}" alt="Harshil Prajapati" class="profile-img">
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <span class="badge bg-light text-primary mb-3 rounded-pill px-3 py-2 fw-bold">About Me</span>
+                <h1 class="display-4 fw-bold mb-3">Hello, I'm <span style="color: #a5b4fc;">Harshil.</span></h1>
+                <h4 class="fw-light text-light opacity-75 mb-4">Full Stack Developer & Django Enthusiast</h4>
+                
+                <div class="lead opacity-90 fs-6" style="line-height: 1.8;">
+                    <p class="mb-3">
+                        I am a 3rd-year Computer Engineering student passionate about building scalable web applications. 
+                        My journey started with Python, and I quickly fell in love with the <strong>Django ecosystem</strong>.
+                    </p>
+                    <p class="mb-4">
+                        I don't just write code; I solve problems. From building secure <strong>E-commerce platforms</strong> 
+                        to designing complex system architectures, I enjoy the entire development lifecycle.
+                    </p>
+                </div>
+
+                <div class="d-flex gap-3 justify-content-center justify-content-lg-start">
+                    <a href="/contact/" class="btn btn-light rounded-pill px-4 fw-bold text-primary">Let's Connect</a>
+                    <a href="#experience" class="btn btn-outline-light rounded-pill px-4">My Journey</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
 <div class="container py-5">
     
-    <div class="row align-items-center mb-5">
-        <div class="col-lg-6 order-2 order-lg-1"> <h1 class="display-5 fw-bold mb-3">Hello, I'm Harshil.</h1>
-            <p class="lead text-muted">Full Stack Developer & Django Enthusiast</p>
-            <p style="line-height: 1.8;">
-                I am a 3rd-year Computer Engineering student passionate about building scalable web applications. 
-                My journey started with Python, and I quickly fell in love with the <strong>Django ecosystem</strong>.
-            </p>
-            <p style="line-height: 1.8;">
-                I don't just write code; I solve problems. From building secure <strong>E-commerce platforms</strong> 
-                to designing complex system architectures, I enjoy the entire development lifecycle.
-            </p>
-            <a href="/contact/" class="btn btn-dark rounded-pill px-4 mt-3">Let's Work Together</a>
+    <div class="row mb-5 g-4">
+        <div class="col-12 text-center mb-2">
+            <h2 class="section-title">Technical Arsenal</h2>
         </div>
         
-        <div class="col-lg-6 mt-4 mt-lg-0 text-center order-1 order-lg-2 mb-4 mb-lg-0">
-            <img src="{% static 'images/harshil.jpg' %}"
-                class="img-fluid rounded-4 shadow-sm"
-                alt="Harshil Prajapati"
-                loading="lazy"
-                decoding="async"
-                width="500"
-                height="400">
- 
-        </div>
-    </div>
-
-    <hr class="my-5 text-muted">
-
-    <div class="row mb-5">
-        <div class="col-12 text-center">
-            <h2 class="section-title">Technical Skills</h2>
-        </div>
-        
-        <div class="col-md-4 mb-4">
-            <h5 class="fw-bold text-center mb-3"><i class="fas fa-server text-secondary me-2"></i>Backend</h5>
-            <div class="text-center">
-                {% for skill in skills_backend %}
-                    <span class="skill-badge">{{ skill.name }}</span>
-                {% endfor %}
+        <div class="col-md-4">
+            <div class="skill-card text-center">
+                <div class="mb-3">
+                    <i class="fas fa-server fa-2x text-primary opacity-75"></i>
+                </div>
+                <h5 class="fw-bold mb-3">Backend</h5>
+                <div>
+                    {% for skill in skills_backend %}
+                        <span class="badge-skill">{{ skill.name }}</span>
+                    {% endfor %}
+                </div>
             </div>
         </div>
 
-        <div class="col-md-4 mb-4">
-            <h5 class="fw-bold text-center mb-3"><i class="fas fa-laptop-code text-secondary me-2"></i>Frontend</h5>
-            <div class="text-center">
-                {% for skill in skills_frontend %}
-                    <span class="skill-badge">{{ skill.name }}</span>
-                {% endfor %}
+        <div class="col-md-4">
+            <div class="skill-card text-center">
+                <div class="mb-3">
+                    <i class="fas fa-laptop-code fa-2x text-primary opacity-75"></i>
+                </div>
+                <h5 class="fw-bold mb-3">Frontend</h5>
+                <div>
+                    {% for skill in skills_frontend %}
+                        <span class="badge-skill">{{ skill.name }}</span>
+                    {% endfor %}
+                </div>
             </div>
         </div>
 
-        <div class="col-md-4 mb-4">
-            <h5 class="fw-bold text-center mb-3"><i class="fas fa-tools text-secondary me-2"></i>Tools</h5>
-            <div class="text-center">
-                {% for skill in skills_tools %}
-                    <span class="skill-badge">{{ skill.name }}</span>
-                {% endfor %}
+        <div class="col-md-4">
+            <div class="skill-card text-center">
+                <div class="mb-3">
+                    <i class="fas fa-tools fa-2x text-primary opacity-75"></i>
+                </div>
+                <h5 class="fw-bold mb-3">Tools & DevOps</h5>
+                <div>
+                    {% for skill in skills_tools %}
+                        <span class="badge-skill">{{ skill.name }}</span>
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="row mb-5">
-        <div class="col-md-6">
-            <h3 class="fw-bold mb-4"><i class="fas fa-briefcase me-2 text-info"></i>Experience</h3>
-            {% for item in experience %}
-            <div class="timeline-item">
-                <span class="timeline-date">{{ item.start_date }} - {{ item.end_date }}</span>
-                <h5 class="fw-bold mt-1">{{ item.title }}</h5>
-                <p class="text-muted mb-1">{{ item.organization }}</p>
-                <small>{{ item.description }}</small>
+    <div class="row py-5" id="experience">
+        <div class="col-lg-6 mb-5 mb-lg-0">
+            <h3 class="fw-bold mb-5 ps-2 border-start border-4 border-primary">Experience</h3>
+            <div class="timeline-container">
+                {% for item in experience %}
+                <div class="timeline-item">
+                    <span class="timeline-date">{{ item.start_date }} - {{ item.end_date }}</span>
+                    <div class="timeline-card mt-2">
+                        <h5 class="fw-bold mb-1">{{ item.title }}</h5>
+                        <p class="text-muted small mb-2 fw-bold text-uppercase">{{ item.organization }}</p>
+                        <p class="mb-0 opacity-75 small">{{ item.description }}</p>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="alert alert-light">Open to new opportunities!</div>
+                {% endfor %}
             </div>
-            {% empty %}
-            <p class="text-muted">Open to new opportunities!</p>
-            {% endfor %}
         </div>
 
-        <div class="col-md-6 mt-4 mt-md-0">
-            <h3 class="fw-bold mb-4"><i class="fas fa-graduation-cap me-2 text-info"></i>Education</h3>
-            {% for item in education %}
-            <div class="timeline-item">
-                <span class="timeline-date">{{ item.start_date }} - {{ item.end_date }}</span>
-                <h5 class="fw-bold mt-1">{{ item.title }}</h5>
-                <p class="text-muted mb-1">{{ item.organization }}</p>
-                <small>{{ item.description }}</small>
+        <div class="col-lg-6">
+            <h3 class="fw-bold mb-5 ps-2 border-start border-4 border-info">Education</h3>
+            <div class="timeline-container">
+                {% for item in education %}
+                <div class="timeline-item">
+                    <span class="timeline-date">{{ item.start_date }} - {{ item.end_date }}</span>
+                    <div class="timeline-card mt-2">
+                        <h5 class="fw-bold mb-1">{{ item.title }}</h5>
+                        <p class="text-muted small mb-2 fw-bold text-uppercase">{{ item.organization }}</p>
+                        <p class="mb-0 opacity-75 small">{{ item.description }}</p>
+                    </div>
+                </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
     </div>
 
     {% if testimonials %}
-    <div class="bg-light p-4 rounded-4 my-5">
-        <h2 class="section-title text-center w-100">Testimonials</h2>
-        <div class="row g-4 mt-2">
+    <div class="py-5">
+        <div class="text-center mb-5">
+            <h2 class="section-title">What People Say</h2>
+        </div>
+        
+        <div class="row g-4">
             {% for test in testimonials %}
             <div class="col-md-6 col-lg-4">
-                <div class="testimonial-card h-100">
-                    <i class="fas fa-quote-left quote-icon"></i>
-                    <p class="mt-3 fst-italic">"{{ test.quote }}"</p>
-                    <div class="d-flex align-items-center mt-4">
-                        {% if test.image %}
-                            <img src="{{ test.image.url }}" 
-                                 class="rounded-circle me-3" 
-                                 width="50" height="50" 
-                                 loading="lazy" 
-                                 alt="{{ test.name }}">
-                        {% else %}
-                            <div class="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center me-3" style="width:50px; height:50px">
-                                {{ test.name|slice:":1" }}
+                <div class="testimonial-card">
+                    <i class="fas fa-quote-right quote-icon"></i>
+                    <div class="testimonial-content d-flex flex-column h-100">
+                        <p class="mb-4 fst-italic text-muted flex-grow-1">"{{ test.quote }}"</p>
+                        
+                        <div class="d-flex align-items-center pt-3 border-top border-light">
+                            {% if test.image %}
+                                <img src="{{ test.image.url }}" class="rounded-circle me-3" width="45" height="45" style="object-fit: cover;">
+                            {% else %}
+                                <div class="rounded-circle bg-light text-primary fw-bold d-flex align-items-center justify-content-center me-3" style="width:45px; height:45px">
+                                    {{ test.name|slice:":1" }}
+                                </div>
+                            {% endif %}
+                            <div>
+                                <h6 class="fw-bold mb-0 small">{{ test.name }}</h6>
+                                <small class="text-muted" style="font-size: 0.75rem;">{{ test.role }}</small>
                             </div>
-                        {% endif %}
-                        <div>
-                            <h6 class="fw-bold mb-0">{{ test.name }}</h6>
-                            <small class="text-muted">{{ test.role }}</small>
                         </div>
                     </div>
                 </div>

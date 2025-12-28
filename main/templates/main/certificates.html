@@ -1,138 +1,236 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}Certificates{% endblock %}
+{% block title %}Certificates | Harshil Prajapati{% endblock %}
 
 {% block extra_css %}
 <style>
-    /* Certificate Specific Styles */
-    .badge-issuer {
-        background-color: #f8f9fa;
-        color: #495057;
-        font-weight: 600;
-        padding: 6px 12px;
-        border-radius: 30px;
-        font-size: 0.8rem;
-        border: 1px solid #e9ecef;
+    :root {
+        --primary-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        --hover-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+        --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
     }
-    
-    .cert-card {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        border: 1px solid rgba(0,0,0,0.08);
-        border-radius: 12px;
+
+    /* --- HERO SECTION --- */
+    .cert-hero {
+        background: #0f172a;
+        background: radial-gradient(circle at top center, #1e293b, #0f172a);
+        color: white;
+        padding: 100px 0 80px;
+        text-align: center;
+        position: relative;
         overflow: hidden;
-        background: white;
+        margin-bottom: 60px;
+    }
+
+    /* Abstract background glow */
+    .cert-hero::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        max-width: 800px;
+        height: 500px;
+        background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, rgba(0,0,0,0) 70%);
+        pointer-events: none;
+    }
+
+    /* --- CARD STYLING --- */
+    .cert-card {
+        border: none;
+        border-radius: 16px;
+        background: var(--card-bg, #fff);
+        box-shadow: var(--card-shadow);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        height: 100%;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
     }
     
+    [data-bs-theme="dark"] .cert-card {
+        background: #1e293b;
+        border: 1px solid rgba(255,255,255,0.05);
+    }
+
     .cert-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        transform: translateY(-8px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     }
-    
+
     /* Thumbnail Area */
     .cert-thumb-wrapper {
-        height: 230px;
+        height: 240px;
         overflow: hidden;
-        background: #f1f3f5; /* Light grey background for non-square certs */
+        background: #f1f5f9;
         position: relative;
         cursor: pointer;
+        padding: 20px;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 10px;
+    }
+    
+    [data-bs-theme="dark"] .cert-thumb-wrapper {
+        background: #0f172a;
     }
 
     .cert-thumb-wrapper img {
         max-width: 100%;
         max-height: 100%;
-        object-fit: contain; /* Ensures the WHOLE certificate is visible */
-        transition: transform 0.4s ease;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.05); /* Subtle shadow on the paper itself */
+        object-fit: contain;
+        transition: transform 0.5s ease;
+        filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
     }
 
-    /* Hover Zoom Effect */
     .cert-card:hover .cert-thumb-wrapper img {
-        transform: scale(1.05);
+        transform: scale(1.08);
     }
 
     /* Overlay Icon */
     .cert-overlay {
         position: absolute;
         top: 0; left: 0; right: 0; bottom: 0;
-        background: rgba(0,0,0,0.3);
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(2px);
         display: flex;
         align-items: center;
         justify-content: center;
         opacity: 0;
-        transition: 0.3s ease;
+        transition: all 0.3s ease;
     }
     .cert-card:hover .cert-overlay {
         opacity: 1;
     }
-    .cert-overlay i {
-        color: white;
-        font-size: 2rem;
-        background: rgba(0,0,0,0.5);
-        padding: 15px;
+    .icon-circle {
+        width: 50px;
+        height: 50px;
         border-radius: 50%;
+        background: var(--primary-gradient);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        transform: scale(0.8);
+        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .cert-card:hover .icon-circle {
+        transform: scale(1);
     }
 
-    /* Modal Image */
+    /* Badges */
+    .badge-issuer {
+        background: rgba(99, 102, 241, 0.1);
+        color: #6366f1;
+        font-weight: 600;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        display: inline-block;
+    }
+    [data-bs-theme="dark"] .badge-issuer {
+        background: rgba(99, 102, 241, 0.2);
+        color: #a5b4fc;
+    }
+
+    /* Buttons */
+    .btn-gradient {
+        background: var(--primary-gradient);
+        border: none;
+        color: white;
+        transition: opacity 0.3s;
+    }
+    .btn-gradient:hover {
+        opacity: 0.9;
+        color: white;
+    }
+    
+    .btn-outline-soft {
+        border: 1px solid #e2e8f0;
+        color: var(--text-color);
+        background: transparent;
+        transition: all 0.3s;
+    }
+    [data-bs-theme="dark"] .btn-outline-soft {
+        border-color: #334155;
+        color: #cbd5e1;
+    }
+    .btn-outline-soft:hover {
+        background: var(--primary-gradient);
+        border-color: transparent;
+        color: white;
+    }
+
+    /* Modal Styling */
+    .modal-content {
+        border: none;
+        border-radius: 16px;
+        overflow: hidden;
+    }
     .modal-img-container {
-        background: #212529; /* Dark background for modal focus */
-        padding: 20px;
-        border-radius: 5px;
+        background: #0f172a; /* Always dark for better contrast with docs */
+        padding: 30px;
+        border-radius: 8px;
         display: flex;
         justify-content: center;
+        align-items: center;
+        min-height: 300px;
     }
     .modal-img-container img {
-        max-height: 80vh; /* Don't be taller than screen */
+        max-height: 70vh;
         max-width: 100%;
         object-fit: contain;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="container py-5">
-    
-    <div class="row mb-5">
-        <div class="col-lg-8 mx-auto text-center">
-            <h2 class="fw-bold display-5 mb-3">My Certifications</h2>
-            <p class="text-muted lead">Continuous learning and professional development.</p>
-            <div class="d-inline-block border-bottom border-3 border-dark" style="width: 60px;"></div>
-        </div>
-    </div>
 
+<header class="cert-hero">
+    <div class="container position-relative" style="z-index: 2;">
+        <span class="badge bg-light text-primary mb-3 rounded-pill px-3 py-2 fw-bold">Credentials</span>
+        <h1 class="display-4 fw-bold mb-3">Certifications & Awards</h1>
+        <p class="lead text-white-50 mx-auto" style="max-width: 600px;">
+            Validating my skills and commitment to continuous learning in software development.
+        </p>
+    </div>
+</header>
+
+<div class="container pb-5">
     <div class="row g-4">
         {% for cert in certs %}
         <div class="col-md-6 col-lg-4">
-            <div class="card cert-card h-100">
+            <div class="card cert-card">
                 
                 <div class="cert-thumb-wrapper" data-bs-toggle="modal" data-bs-target="#certModal{{ cert.id }}">
                     <img src="{{ cert.file.url }}" alt="{{ cert.name }}" loading="lazy">
-                    
                     <div class="cert-overlay">
-                        <i class="fas fa-search-plus"></i>
+                        <div class="icon-circle">
+                            <i class="fas fa-search-plus"></i>
+                        </div>
                     </div>
                 </div>
 
                 <div class="card-body d-flex flex-column p-4">
-                    <div class="mb-2">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
                         <span class="badge-issuer">
-                            <i class="fas fa-award me-1 text-warning"></i> {{ cert.issuer }}
+                            <i class="fas fa-award me-1"></i> {{ cert.issuer }}
                         </span>
+                        {% if cert.date_earned %}
+                            <small class="text-muted fw-bold" style="font-size: 0.75rem; text-transform: uppercase;">
+                                {{ cert.date_earned|date:"M Y" }}
+                            </small>
+                        {% endif %}
                     </div>
-                    
-                    {% if cert.date_earned %}
-                        <small class="text-muted d-block mt-1" style="font-size: 0.8rem;">
-                            Issued: {{ cert.date_earned|date:"M Y" }}
-                        </small>
-                    {% endif %}
 
-                    <h5 class="card-title fw-bold mt-2 mb-3">{{ cert.name }}</h5>
+                    <h5 class="card-title fw-bold mb-3">{{ cert.name }}</h5>
                     
-                    <div class="mt-auto">
-                        <button class="btn btn-outline-dark w-100 rounded-pill btn-sm" data-bs-toggle="modal" data-bs-target="#certModal{{ cert.id }}">
+                    <div class="mt-auto pt-3 border-top border-light">
+                        <button class="btn btn-outline-soft w-100 rounded-pill btn-sm fw-bold" data-bs-toggle="modal" data-bs-target="#certModal{{ cert.id }}">
                             View Certificate
                         </button>
                     </div>
@@ -142,9 +240,9 @@
 
         <div class="modal fade" id="certModal{{ cert.id }}" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-xl"> 
-                <div class="modal-content">
+                <div class="modal-content shadow-lg">
                     
-                    <div class="modal-header border-0 pb-0">
+                    <div class="modal-header border-bottom-0 pb-0">
                         <h5 class="modal-title fw-bold ps-2">{{ cert.name }}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
@@ -155,20 +253,21 @@
                         </div>
                     </div>
 
-                    <div class="modal-footer border-0 pt-0">
-                        <a href="{{ cert.file.url }}" class="btn btn-primary" download>
-                            <i class="fas fa-download me-2"></i> Download File
+                    <div class="modal-footer border-top-0 pt-0 pb-4 px-4">
+                        <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Close</button>
+                        <a href="{{ cert.file.url }}" class="btn btn-gradient rounded-pill px-4" download>
+                            <i class="fas fa-download me-2"></i> Download
                         </a>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
         </div>
         {% empty %}
         <div class="col-12 text-center py-5">
-            <div class="p-5 bg-light rounded-3">
-                <i class="fas fa-folder-open fa-3x text-muted mb-3"></i>
-                <p class="text-muted lead">No certificates uploaded yet.</p>
+            <div class="py-5 bg-light rounded-4">
+                <i class="fas fa-certificate fa-3x text-muted opacity-50 mb-3"></i>
+                <h4 class="text-muted">No certificates uploaded yet.</h4>
+                <p class="text-muted opacity-75">Check back later for updates.</p>
             </div>
         </div>
         {% endfor %}
