@@ -7,11 +7,7 @@ class Project(models.Model):
     tech_stack = models.CharField(max_length=200, help_text="Comma separated technologies")
     description = models.TextField()
 
-    image = CloudinaryField(
-        'image',
-        blank=True,
-        null=True
-    )
+    image = CloudinaryField('image', blank=True, null=True)
 
     demo_video = CloudinaryField(
     resource_type='video',
@@ -33,7 +29,7 @@ class Project(models.Model):
 class Certificate(models.Model):
     name = models.CharField(max_length=200)
     issuer = models.CharField(max_length=200)
-    file = models.ImageField(upload_to='certificates/')
+    file = CloudinaryField('image')   # ✅ CHANGE THIS
     date_earned = models.DateField(null=True, blank=True)
 
     def __str__(self):
